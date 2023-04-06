@@ -1,0 +1,80 @@
+%Wordle Final Version
+%this version takes other versions and runs multiple function versions of
+%specific tasks in previous versions
+%Created by Nicholas Corker
+%a1852681
+
+close all
+clc %clears command window
+clear workspace %clears all and any stored variables, arrays, vectors and cells
+
+%Ask the Player if they would like to read instructions
+showInstructions
+%Read in the users difficulty selection
+numberOfGuesses = selectDifficulty; %this determines the amount of guesses that the user will have and is run through the selectDifficulty function
+disp(numberOfGuesses); %used to verify the function operates correctly
+
+%Randomly select the user's word to guess from a dictionary of 5 letter
+%words
+[wordToGuess, wordToGuessChar] = selectWord('dictionary.txt'); %dictionary.txt is the file it searches for a word randomly in
+disp(wordToGuess); %for testing purposes displays word
+%disp(wordToGuessChar); %for testing purposes displays word
+
+
+%define the number of guesses - for test it equals 6 though
+maxGuesses = 6;
+numberOfGuesses = 0;
+
+%define the number of letters
+numberOfLetters = 5;
+
+%set index to 1
+i = 1;
+
+%using a while loop for guesses less than max guesses, use two functions to
+%search for matches in the letters
+correctGuessedLetters = 0; %defines correctly guessed letters as zero as none have been guessed at this point
+
+%define letter image
+letterImageGuess= [];
+letterImageAll = [];
+
+while numberOfGuesses < maxGuesses %continues looping as long as user hasn't surpassed max guesse
+    guess = lower(input('Guess the word: ','s')); %asks user for guess and also converts to all lower case
+    if length(guess) > length(wordToGuess) | length(guess) < length(wordToGuess)%checks if the user's guess had too many letters
+        guess = input('Your guess had too many or not enough letters! Please try to guess again. Guess the word: ', 's'); %displays message and asks for new guess
+    end
+
+    guessChar = num2cell(guess); %convets guess to a cell array
+
+        %search for characters in the correct position using a function
+            correctGuessedLetters = searchCorrectPosition(i, numberOfLetters, guess, wordToGuessChar);
+        
+        %set the remaining characters to guess  (ie what hasnt been guessed
+        %is stored in a new array
+            remainingToGuess = wordToGuessChar(~correctGuessedLetters);
+
+        %search for letters in the wrong spot
+            correctGuessedLetters = searchIncorrectPosition(guess, remainingToGuess, correctGuessedLetters);
+
+        %convert to a cell array for the guessed letters   
+            disp(correctGuessedLetters);
+            correctGuessedLettersCell = num2cell(correctGuessedLetters);
+            letterImageAll = imageDisplay(correctGuessedLetters, letterImageGuess, letterImageAll);
+            numberOfGuesses = numberOfGuesses +1;
+
+      if guess == wordToGuess
+          fprintf('Congratulations, you guessed the word. The word was %s! \n', wordToGuess);
+          return %ends game
+      end
+end
+
+if guess ~= wordToGuess % loop condition if final guess does not equal to the word to guess
+    fprintf('You did not guess the word. You lost this round. The word was %s! \n', wordToGuess); %displays losing mesage
+    return %ends game
+end
+
+
+%end of game!
+
+

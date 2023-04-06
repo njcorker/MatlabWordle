@@ -1,0 +1,18 @@
+These are the instructions on how to play this version of wordle.
+This version of the popular game Wordle, is created using text only, so it plays a little differently to the
+usual verssion of Wordle you can play online, as that version uses lots of visuals for everything.
+In fact, this text based version has some additional features that can create new ways for you to play the popular word game.
+
+The basic rules are the same, however!
+You have a set amount of guesse to guess the 5 letter word.
+You recieve a set amount of guesses depending on your difficulty selection:
+Easy = 6 guesses
+Medium = 5 guesses
+Hard = 4 guesses
+
+The program will print different numbers depending on how your guess matches up with the randomly selected word that you need to guesse.
+
+If you guess a letter that is in the right position, it will print a 1.
+If you guess a letter, but it is in the wrong position, it will print a 2.
+If you guess a letter that is not in the word at all, it will print a 0.
+
